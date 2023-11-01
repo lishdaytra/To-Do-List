@@ -4,11 +4,11 @@ from todo.models import Task, Category
 class TaskAdmin(admin.ModelAdmin):
     list_display = (
         'title',
+        'category',
         'description',
         'completed',
         'created_at',
         'date_end',
-        'category'
     )
 
 admin.site.register(Task, TaskAdmin)
