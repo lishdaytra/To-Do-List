@@ -7,7 +7,7 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ('id', 'name',)
 
 class TaskSerializer(serializers.ModelSerializer):
-    category = serializers.StringRelatedField(read_only=True,)
+    category = serializers.StringRelatedField()
     class Meta:
         model = Task
         fields = (
@@ -17,5 +17,5 @@ class TaskSerializer(serializers.ModelSerializer):
             'description',
             'created_at',
             'completed',
-            'date_end',
+            'created_end',
         )

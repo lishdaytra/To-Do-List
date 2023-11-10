@@ -8,7 +8,7 @@ class TaskAdmin(admin.ModelAdmin):
         'description',
         'completed',
         'created_at',
-        'date_end',
+        'created_end',
     )
 
 admin.site.register(Task, TaskAdmin)

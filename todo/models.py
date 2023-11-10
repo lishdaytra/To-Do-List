@@ -9,7 +9,7 @@ class Category(models.Model):
 
 
 class Task(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=128, null=False)
     category = models.ForeignKey(
         Category,
         related_name='category',
@@ -19,7 +19,7 @@ class Task(models.Model):
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     completed = models.BooleanField(default=False)
-    date_end = models.DateTimeField(auto_now=True)
+    created_end = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.title}, category: {self.category}'
