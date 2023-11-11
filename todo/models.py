@@ -17,8 +17,8 @@ class Task(models.Model):
     category = models.ForeignKey(
         Category,
         related_name='category',
-        on_delete=models.CASCADE,
-        default=0
+        on_delete=models.SET_NULL,
+        null=True
     )
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
