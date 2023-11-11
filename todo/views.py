@@ -1,7 +1,10 @@
-from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters
-from todo.serializers import TaskSerializer
+from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import (
+    ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
+)
+from todo.serializers import TaskSerializer, CategorySerializer
 from todo.models import Category, Task
 
 
@@ -13,7 +16,13 @@ class TaskViewSet(viewsets.ModelViewSet):
         filters.OrderingFilter,
         filters.SearchFilter,
     ]
-    filterset_fields = ('title','category', 'completed')
+    filterset_fields = ('title', 'category', 'completed')
     search_fields = ('title',)
-    ordering_fields = ('category','is_complete', 'created_at', 'created_end')
+    ordering_fields = ('category', 'is_complete', 'created_at', 'created_end')
+
+
 # Create your views here.
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
