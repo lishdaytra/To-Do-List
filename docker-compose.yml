@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  todo_sqlite3:
+    image: sqlite:latest
+    container_name: todo_sqlite
+    volumes:
+      - ~/.sqlite/data/todo:/db.sqlite3
+    ports:
+      - "5432:5432"
+  ToDoList:
+    image: todo_docker:latest
+    container_name: todo_django
+    depends_on:
+      - todo_sqlite3
+    volumes:
+      - static_volume:/todo/static
+    command: >
+      bash -c "./manage.py collectstatic --noinput && ./manage.py migrate  && gunicorn -b 0.0.0.0:8000 core.wsgi:application"
+  nginx:
+    build:
+      dockerfile: ./Dockerfile
+      context: ./docker/nginx/
+    container_name: todo_nginx
+    image: todo_nginx
+    volumes:
+      - static_volume:/todo/static
+    depends_on:
+      - ToDoList
+    ports:
+      - "80:80"
+
+volumes:
+  static_volume:
+
